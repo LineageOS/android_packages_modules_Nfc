@@ -556,6 +556,7 @@ public class BluetoothPeripheralHandoverTest {
         when(mockIntent.getIntExtra(BluetoothDevice.EXTRA_PAIRING_VARIANT,
                 BluetoothDevice.ERROR)).thenReturn(BluetoothDevice.PAIRING_VARIANT_CONSENT);
 
+        bluetoothPeripheralHandover.mState = STATE_BONDING;
         bluetoothPeripheralHandover.handleIntent(mockIntent);
         verify(mockDevice).setPairingConfirmation(true);
         assertTrue(bluetoothPeripheralHandover.mShouldAbortBroadcast);

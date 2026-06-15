@@ -575,7 +575,7 @@ public class BluetoothPeripheralHandover implements BluetoothProfile.ServiceList
         } else if (BluetoothDevice.ACTION_PAIRING_REQUEST.equals(action)) {
             int type = intent.getIntExtra(BluetoothDevice.EXTRA_PAIRING_VARIANT,
                 BluetoothDevice.ERROR);
-            if (type == BluetoothDevice.PAIRING_VARIANT_CONSENT) {
+            if (mState == STATE_BONDING && type == BluetoothDevice.PAIRING_VARIANT_CONSENT) {
                 mDevice.setPairingConfirmation(true);
                 mShouldAbortBroadcast = true;
                 Log.d(TAG, "PAIRING_REQUEST is Auto Confirmed");
