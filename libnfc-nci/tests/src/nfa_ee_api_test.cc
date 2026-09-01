@@ -112,6 +112,34 @@ TEST_F(NfaEeApiTest, NFA_EeRegisterNormal) {
   EXPECT_EQ(status, NFA_STATUS_OK);
 }
 
+TEST_F(NfaEeApiTest, NfaEeApiRegisterExcessiveActiveEcbs) {
+  memset(&nfa_ee_cb, 0, sizeof(nfa_ee_cb));
+  for (size_t i = 0; i < NFA_EE_NUM_ECBS; ++i) {
+    nfa_ee_cb.ecb[i].nfcee_id = i + 1;
+    nfa_ee_cb.ecb[i].ee_status = NFA_EE_STATUS_ACTIVE;
+  }
+  nfa_ee_cb.cur_ee = NFA_EE_NUM_ECBS;
+
+  // Function-local statics are initialized only once per process, so reset the
+  // value explicitly in case this test runs more than once in the same process.
+  static uint8_t reported_num_ee;
+  reported_num_ee = 0;
+  tNFA_EE_CBACK* mock_callback = [](tNFA_EE_EVT event,
+                                    tNFA_EE_CBACK_DATA* p_data) {
+    if (event == NFA_EE_DISCOVER_REQ_EVT && p_data) {
+      reported_num_ee = p_data->discover_req.num_ee;
+    }
+  };
+
+  tNFA_EE_MSG msg = {};
+  msg.ee_register.p_cback = mock_callback;
+  nfa_ee_api_register(&msg);
+
+  const size_t max_disc_info = sizeof(tNFA_EE_DISCOVER_REQ::ee_disc_info) /
+                               sizeof(tNFA_EE_DISCOVER_REQ::ee_disc_info[0]);
+  EXPECT_EQ(reported_num_ee, max_disc_info);
+}
+
 // Tests for NFA_EeDeregister
 TEST_F(NfaEeApiTest, NFA_EeDeregister) {
   memset(&nfa_ee_cb, 0, sizeof(nfa_ee_cb));

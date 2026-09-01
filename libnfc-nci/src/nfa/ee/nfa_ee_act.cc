@@ -2342,8 +2342,12 @@ static void nfa_ee_build_discover_req_evt(tNFA_EE_DISCOVER_REQ* p_evt_data) {
   p_evt_data->num_ee = 0;
   p_cb = nfa_ee_cb.ecb;
   p_info = p_evt_data->ee_disc_info;
+  const size_t max_disc_info =
+      sizeof(p_evt_data->ee_disc_info) / sizeof(p_evt_data->ee_disc_info[0]);
 
-  for (xx = 0; xx < nfa_ee_cb.cur_ee && xx < NFA_EE_NUM_ECBS; xx++, p_cb++) {
+  for (xx = 0; xx < nfa_ee_cb.cur_ee && xx < NFA_EE_NUM_ECBS &&
+               p_evt_data->num_ee < max_disc_info;
+       xx++, p_cb++) {
     if ((p_cb->ee_status & NFA_EE_STATUS_INT_MASK) ||
         ((p_cb->ee_status != NFA_EE_STATUS_ACTIVE) &&
          (p_cb->ee_status !=
