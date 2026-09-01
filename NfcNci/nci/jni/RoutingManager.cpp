@@ -22,6 +22,8 @@
 // Redefined by android-base headers.
 #undef ATTRIBUTE_UNUSED
 
+#include <algorithm>
+
 #include <android-base/logging.h>
 #include <android-base/stringprintf.h>
 #include <nativehelper/JNIHelp.h>
@@ -1148,7 +1150,12 @@ tNFA_TECHNOLOGY_MASK RoutingManager::updateEeTechRouteSetting() {
 
   tNFA_STATUS nfaStat;
 
-  for (uint8_t i = 0; i < localEeInfo.num_ee; i++) {
+  const size_t maxEe =
+      sizeof(localEeInfo.ee_disc_info) / sizeof(localEeInfo.ee_disc_info[0]);
+  const uint8_t count =
+      std::min(localEeInfo.num_ee, static_cast<uint8_t>(maxEe));
+
+  for (uint8_t i = 0; i < count; i++) {
     tNFA_HANDLE eeHandle = localEeInfo.ee_disc_info[i].ee_handle;
     tNFA_TECHNOLOGY_MASK seTechMask = 0;
 
@@ -1340,7 +1347,12 @@ void RoutingManager::nfaEeCallback(tNFA_EE_EVT event,
       sEeInfoMutex.lock();
       memcpy(&routingManager.mEeInfo, &eventData->discover_req,
              sizeof(routingManager.mEeInfo));
-      for (int i = 0; i < eventData->discover_req.num_ee; i++) {
+      const size_t maxEe = sizeof(eventData->discover_req.ee_disc_info) /
+                           sizeof(eventData->discover_req.ee_disc_info[0]);
+      const int count =
+          std::min(static_cast<int>(eventData->discover_req.num_ee),
+                   static_cast<int>(maxEe));
+      for (int i = 0; i < count; i++) {
         LOG(DEBUG) << StringPrintf(
             "%s: NFA_EE_DISCOVER_REQ_EVT; nfceeId=0x%X; la_proto=0x%X, "
             "lb_proto=0x%x, lf_proto=0x%x",
