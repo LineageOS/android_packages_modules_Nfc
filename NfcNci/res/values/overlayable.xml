@@ -16,7 +16,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
     <overlayable name="NfcCustomization">
         <!-- START VENDOR CUSTOMIZATION -->
-        <policy type="product|system|vendor">
+        <policy type="odm|product|system|vendor">
           <!-- Params from config.xml that can be overlaid -->
             <item name="enable_nfc_url_open_dialog" type="bool" />
             <item name="enable_auto_play" type="bool" />
