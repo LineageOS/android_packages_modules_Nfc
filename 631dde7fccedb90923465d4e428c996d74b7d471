@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ab1d818_d286c03b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4550
+      },
+      "writtenOn": "2026-10-18T19:32:55Z",
+      "side": 1,
+      "message": "Unless this gets merged upstream, I don\u0027t see the point doing it when you can simply put the overlays in vendor",
+      "revId": "631dde7fccedb90923465d4e428c996d74b7d471",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
