@@ -311,6 +311,9 @@ public class NfcService implements DeviceHostListener, ForegroundUtils.Callback 
 
     // minimum screen state that enables NFC polling
     static final int NFC_POLLING_MODE = ScreenStateHelper.SCREEN_STATE_OFF_UNLOCKED;
+    // NCI 1.0 controllers have no power sub-states, so polling enabled here is never turned off
+    // by doSetScreenState() and keeps running with the screen off.
+    static final int NFC_POLLING_MODE_NCI_1_0 = ScreenStateHelper.SCREEN_STATE_ON_UNLOCKED;
 
     // Time to wait for NFC controller to initialize before watchdog
     // goes off. This time is chosen large, because firmware download
@@ -5098,7 +5101,9 @@ public class NfcService implements DeviceHostListener, ForegroundUtils.Callback 
         // Recompute discovery parameters based on screen state
         NfcDiscoveryParameters.Builder paramsBuilder = NfcDiscoveryParameters.newBuilder();
         // Polling
-        if (screenState >= NFC_POLLING_MODE && isReaderOptionEnabled()) {
+        int pollingMode =
+                (nci_version < NCI_VERSION_2_0) ? NFC_POLLING_MODE_NCI_1_0 : NFC_POLLING_MODE;
+        if (screenState >= pollingMode && isReaderOptionEnabled()) {
             // Check if reader-mode is enabled
             if (mReaderModeParams != null) {
                 int techMask = 0;
