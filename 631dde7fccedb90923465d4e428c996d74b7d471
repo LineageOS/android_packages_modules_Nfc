@@ -16,6 +16,41 @@
       "message": "Unless this gets merged upstream, I don\u0027t see the point doing it when you can simply put the overlays in vendor",
       "revId": "631dde7fccedb90923465d4e428c996d74b7d471",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30567964_15592512",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 29415
+      },
+      "writtenOn": "2026-10-18T19:34:44Z",
+      "side": 1,
+      "message": "Submitted to AOSP",
+      "revId": "631dde7fccedb90923465d4e428c996d74b7d471",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce4c760d_15f6560e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 29415
+      },
+      "writtenOn": "2026-10-18T19:34:44Z",
+      "side": 1,
+      "message": "correctness thing, odm \u003d\u003d device, vendor \u003d\u003d soc vendor\n\ndid submit to aosp fwiw, and this has precedent in the wifi module where I had the same change merged upstream for that",
+      "parentUuid": "1ab1d818_d286c03b",
+      "revId": "631dde7fccedb90923465d4e428c996d74b7d471",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
